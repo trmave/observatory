@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS providers (
     enabled BOOLEAN DEFAULT 1,
     current_status TEXT DEFAULT 'unknown',
     last_checked_at DATETIME,
+    last_message TEXT DEFAULT '',
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
