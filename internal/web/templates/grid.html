@@ -1,0 +1,62 @@
+{{ range .Providers }}
+<div class="p-8 bg-panel-bg flex flex-col h-full relative group transition-all duration-300
+    {{ if eq .CurrentStatus "ok" }} neon-border-ok hover:bg-emerald-500/5
+    {{ else if eq .CurrentStatus "warning" }} neon-border-warning hover:bg-amber-500/5
+    {{ else if or (eq .CurrentStatus "critical") (eq .CurrentStatus "error") }} neon-border-critical hover:bg-red-500/5
+    {{ else }} border-2 border-slate-900 {{ end }}">
+    
+    <div class="flex justify-between items-start mb-12">
+        <div class="flex items-center gap-5">
+            <!-- Iconos según proveedor -->
+            <div class="text-white/40 group-hover:text-white/80 transition-colors">
+                {{ if eq .Slug "aws" }}
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L1 21h22L12 2zm0 4.16L18.84 19H5.16L12 6.16z"></path></svg>
+                {{ else if eq .Slug "github" }}
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.137 20.164 22 16.418 22 12c0-5.523-4.477-10-10-10z"></path></svg>
+                {{ else if eq .Slug "azure" }}
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M4 4h7v7H4V4zm10 0h7v7h-7V4zM4 13h7v7H4v-7zm10 0h7v7h-7v-7z"></path></svg>
+                {{ else if eq .Slug "cloudflare" }}
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M21 16.5c0 .38-.21.71-.53.88l-7.97 4.13c-.31.16-.69.16-1 0L3.53 17.38c-.32-.17-.53-.5-.53-.88V8.5c0-.38.21-.71.53-.88l7.97-4.13c.31-.16.69-.16 1 0l7.97 4.13c.32.17.53.5.53.88v8z"></path></svg>
+                {{ else if eq .Slug "slack" }}
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M6 15a2 2 0 10-2 2h2v-2zm1 0a2 2 0 104 0V5a2 2 0 00-2-2 2 2 0 00-2 2v10zm2 5a2 2 0 102 2v-2H9zm0-1a2 2 0 100-4h-10a2 2 0 00-2 2 2 2 0 002 2h10z"></path></svg>
+                {{ else }}
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                {{ end }}
+            </div>
+            <a href="{{ .URL }}" target="_blank" class="text-3xl font-bold text-white tracking-tighter uppercase group-hover:text-emerald-500 transition-colors">{{ .Name }}</a>
+        </div>
+        <div class="px-5 py-2 text-[14px] font-bold uppercase tracking-[0.2em] shadow-sm
+            {{ if eq .CurrentStatus "ok" }} status-badge-ok 
+            {{ else if eq .CurrentStatus "warning" }} status-badge-warning 
+            {{ else if eq .CurrentStatus "critical" }} status-badge-critical 
+            {{ else if eq .CurrentStatus "error" }} status-badge-critical
+            {{ else }} bg-slate-700 text-slate-100 {{ end }}">
+            {{ if eq .CurrentStatus "ok" }} OPERATIONAL
+            {{ else if eq .CurrentStatus "warning" }} DEGRADED
+            {{ else if eq .CurrentStatus "critical" }} DOWN
+            {{ else if eq .CurrentStatus "error" }} FAILED
+            {{ else }} CHECKING... {{ end }}
+        </div>
+    </div>
+
+    <!-- Footer de la Card -->
+    <div class="mt-auto border-t border-white/5 pt-6 flex flex-col gap-3">
+        <div class="flex items-center justify-between text-[12px] font-bold uppercase tracking-widest text-slate-300/80">
+            <div class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full {{ if eq .CurrentStatus "ok" }}bg-emerald-500 shadow-[0_0_8px_#10b981]{{ else if eq .CurrentStatus "warning" }}bg-amber-500 shadow-[0_0_8px_#f59e0b]{{ else }}bg-red-500 shadow-[0_0_8px_#ef4444]{{ end }}"></span>
+                <span class="{{ if eq .CurrentStatus "ok" }}text-emerald-500/80{{ else if eq .CurrentStatus "warning" }}text-amber-500/80{{ else }}text-red-500/80{{ end }}">
+                    {{ if eq .CurrentStatus "ok" }}SYSTEM_NOMINAL{{ else }}INCIDENT_DETECTED{{ end }}
+                </span>
+            </div>
+            <span>SYNC: {{ .LastCheckedAt.Format "15:04:05" }}</span>
+        </div>
+        
+        <!-- Mensaje Dinámico -->
+        <div class="bg-black/40 p-3 rounded-sm border border-white/5">
+            <p class="text-[13px] font-mono terminal-text {{ if eq .CurrentStatus "ok" }}text-emerald-500/80{{ else if eq .CurrentStatus "warning" }}text-amber-500{{ else }}text-red-500{{ end }} break-words uppercase">
+                > {{ if .LastMessage }}{{ .LastMessage }}{{ else if eq .CurrentStatus "error" }}CONNECTION_REFUSED_OR_TIMEOUT{{ else }}NO_TELEMETRY_LOGS{{ end }}
+            </p>
+        </div>
+    </div>
+</div>
+{{ end }}

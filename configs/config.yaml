@@ -1,0 +1,60 @@
+server:
+  port: 8080
+  env: development
+
+database:
+  path: "observatory.db"
+
+polling:
+  interval_seconds: 60
+  timeout_seconds: 10
+
+providers:
+  - name: "GitHub"
+    slug: "github"
+    enabled: true
+    type: "status_page"
+    url: "https://www.githubstatus.com/"
+    api_url: "https://www.githubstatus.com/api/v2/summary.json"
+  
+  - name: "AWS"
+    slug: "aws"
+    enabled: true
+    type: "aws_health"
+    url: "https://health.aws.amazon.com/health/status"
+    api_url: "https://health.aws.amazon.com/health/status"
+
+  - name: "Azure"
+    slug: "azure"
+    enabled: true
+    type: "azure_status"
+    url: "https://status.azure.com/en-gb/status/"
+    api_url: "https://status.azure.com/en-gb/status/"
+
+  - name: "Google Cloud"
+    slug: "gcp"
+    enabled: true
+    type: "gcp_status"
+    url: "https://status.cloud.google.com/"
+    api_url: "https://status.cloud.google.com/incidents.json"
+
+  - name: "Cloudflare"
+    slug: "cloudflare"
+    enabled: true
+    type: "status_page"
+    url: "https://www.cloudflarestatus.com/"
+    api_url: "https://www.cloudflarestatus.com/api/v2/summary.json"
+
+  - name: "Slack"
+    slug: "slack"
+    enabled: true
+    type: "slack"
+    url: "https://status.slack.com/"
+    api_url: "https://slack-status.com/api/v2.0.0/current"
+
+  - name: "Stripe"
+    slug: "stripe"
+    enabled: true
+    type: "stripe"
+    url: "https://status.stripe.com/"
+    api_url: "https://status.stripe.com/api/v2/summary.json"

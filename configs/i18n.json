@@ -1,0 +1,28 @@
+{
+    "es": {
+        "title": "Estado de Servicios Globales",
+        "description": "Monitorización en tiempo real de los principales proveedores cloud.",
+        "search_placeholder": "Filtrar por proveedor...",
+        "all": "Todos",
+        "incidents": "Incidentes",
+        "last_check": "Sync",
+        "source_page": "Página Fuente",
+        "operational": "Operacional",
+        "degraded": "Degradado",
+        "outage": "Interrupción",
+        "checking": "Comprobando..."
+    },
+    "en": {
+        "title": "Global Service Status",
+        "description": "Real-time monitoring of major cloud providers.",
+        "search_placeholder": "Filter by provider...",
+        "all": "All",
+        "incidents": "Incidents",
+        "last_check": "Sync",
+        "source_page": "Source Page",
+        "operational": "Operational",
+        "degraded": "Degraded",
+        "outage": "Major Outage",
+        "checking": "Checking..."
+    }
+}
